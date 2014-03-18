@@ -33,12 +33,12 @@ angular.module( 'magicsquare')
         // 2 case to the right :
         scope.selectable = [];
 
-        if((i +2) < total) {
-          scope.selectable[i+2] = true;
+        if((i +1 +2) < total) {
+          scope.selectable[i+1+2] = true;
         }
 
-        if ((i - 2) < total && (i-2) >= 0) {
-          scope.selectable[i-2] = true;
+        if (((i+1) - 2) < total && ((i+1)-2) >= 0) {
+          scope.selectable[(i+1)-2] = true;
         }
 
       };
