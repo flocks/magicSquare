@@ -1,6 +1,6 @@
-@import '../../vendor/ngDialog/css/ngDialog.css';
+@import 'ngDialog.css';
 
-@import '../../vendor/ngDialog/css/ngDialog-theme-plain.css';
+@import 'ngDialog-theme-plain.css';
 
 /**
  * This is the main application stylesheet. It should include or import all
