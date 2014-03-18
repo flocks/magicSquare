@@ -2,7 +2,8 @@ var app = angular.module( 'magicsquare', [
   'templates-app',
   'templates-common',
   'ui.state',
-  'ui.route'
+  'ui.route',
+  'ngDialog'
 ])
 
 .config( function myAppConfig ( $stateProvider, $urlRouterProvider ) {

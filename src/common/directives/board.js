@@ -1,6 +1,6 @@
 angular.module( 'magicsquare')
 
-.directive( 'board', function() {
+.directive( 'board', function(ngDialog, $rootScope) {
   return {
     restrict: 'E',
     templateUrl: 'directives/board.tpl.html',
@@ -116,6 +116,7 @@ angular.module( 'magicsquare')
         _.each(scope.rangeRow, function(i) {
           scope.selectable[i] = false;
           scope.selected[i] = false;
+          hasStart = false;
         });
 
 
@@ -123,6 +124,11 @@ angular.module( 'magicsquare')
 
       scope.rangeRow = _.range(nbRow * nbRow);
       _init();
+
+      $rootScope.$on('ngDialog.closed', function(e, dialog) {
+        _init();
+      });
+
 
       scope.handleClick = function(i) {
         
@@ -144,10 +150,16 @@ angular.module( 'magicsquare')
           count = _checkIfLeft(i) + _checkUp(i, positionCol) + _checkDown(i, positionCol) + _checkIfRight(i) + _checkDiagoTopLeft(i, positionCol) + _checkDiagoTopRight(i,positionCol) +  _checkDiagoBottomLeft(i,positionCol) + _checkDiagoBottomRight(i,positionCol);
 
           if(count === 0) {
-            console.log("perdu");
+            ngDialog.open({
+              template: "<div id='popup'><p>Game Over ! </p><input type='button' ng-click='closeThisDialog()' value='Retry ?'></div>",
+              plain: true,
+              className: 'ngdialog-theme-plain'
+            });
+
           }
           else {
-            console.log("keep trying");
+            
+
           }
         
         }
