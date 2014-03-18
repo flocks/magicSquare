@@ -32,6 +32,22 @@ angular.module( 'magicsquare')
         }
       };
 
+      var _checkUp = function(i, positionCol) {
+        var offset = (2 * nbRow + positionCol) + (nbRow - positionCol);
+        var position = i - offset;
+        if (!scope.selected[position]) {
+          scope.selectable[position] = true;
+        }
+      };
+
+      var _checkDown = function(i, positionCol) {
+        var offset = (2 * nbRow + positionCol) + (nbRow - positionCol);
+        var position = i + offset;
+        if (!scope.selected[position]) {
+          scope.selectable[position] = true;
+        }
+      };
+
       var _checkDiagoTopLeft = function(i,positionCol) {
         var offset = positionCol + nbRow + (nbRow - positionCol) + 2;
 
@@ -101,6 +117,8 @@ angular.module( 'magicsquare')
           scope.selected[i] = true;
           scope.selectable[i] = false;
           _checkIfLeft(i);
+          _checkUp(i, positionCol);
+          _checkDown(i, positionCol);
           _checkIfRight(i);
           _checkDiagoTopLeft(i, positionCol);
           _checkDiagoTopRight(i,positionCol);
