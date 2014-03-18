@@ -18,6 +18,8 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
+  grunt.loadNpmTasks('grunt-gh-pages');
+
 
   /**
    * Load in our build configuration file.
@@ -536,7 +538,14 @@ module.exports = function ( grunt ) {
           livereload: false
         }
       }
-    }
+      
+    },
+    'gh-pages': {
+          options: {
+            base: 'build'
+          },
+          src: ['**']
+       }
   };
 
   grunt.initConfig( grunt.util._.extend( taskConfig, userConfig ) );
