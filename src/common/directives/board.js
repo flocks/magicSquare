@@ -12,13 +12,21 @@ angular.module( 'magicsquare')
       var nbRow = parseInt(attrs.cols,10);
       var total = nbRow * nbRow;
 
+      var _checkIfRight = function(i) {
+        var numeroLine = parseInt(i/nbRow, 10);
+        var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) )+ 1;
+
+        console.log("right = "+ (positionCol +2 < nbRow)  );
+        return (positionCol +2 < nbRow);
+      
+      };
+
       var _checkIfLeft = function(i) {
         var numeroLine = parseInt(i/nbRow, 10);
-        var positionCol = nbRow - (((numeroLine+1) * nbRow) - i);
+        var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) )+ 1;
 
-        console.log(numeroLine, positionCol);
-
-      
+        console.log("left = " +  (positionCol - 2 > 1));
+        return (positionCol - 2 > 1);
       };
 
       var _setSelectable = function(i) {
@@ -32,6 +40,10 @@ angular.module( 'magicsquare')
         if ((i - 2) < total && (i-2) >= 0) {
           scope.selectable[i-2] = true;
         }
+
+      };
+
+      var _hasCaseToTheLeftLine = function(i) {
 
       };
 
@@ -65,6 +77,7 @@ angular.module( 'magicsquare')
           }
           scope.selected[i] = true;
           _checkIfLeft(i);
+          _checkIfRight(i);
 
           _setSelectable(i); 
         }
