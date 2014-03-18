@@ -16,8 +16,8 @@ angular.module( 'magicsquare')
         var numeroLine = parseInt(i/nbRow, 10);
         var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) )+ 1;
         //return (positionCol +2 < nbRow);
-        if (positionCol + 2 < nbRow) {
-          scope.selectable[i+2] = true;
+        if (!scope.selected[i+3] && positionCol + 2 < nbRow) {
+          scope.selectable[i+3] = true;
         }
       
       };
@@ -27,8 +27,8 @@ angular.module( 'magicsquare')
         var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) )+ 1;
         //return (positionCol - 2 > 1);
 
-        if (positionCol - 2 > 1) {
-          scope.selectable[i-2] = true;
+        if (!scope.selected[i-3] && positionCol - 2 > 1) {
+          scope.selectable[i-3] = true;
         }
       };
 
@@ -37,7 +37,7 @@ angular.module( 'magicsquare')
 
         var positionDiago1 = i - offset;
 
-        if ( (positionCol -2) > 0 && angular.isDefined(scope.selectable[positionDiago1])) {
+        if (!scope.selected[positionDiago1] &&  (positionCol -2) > 0 && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
         }
       };
@@ -46,7 +46,7 @@ angular.module( 'magicsquare')
         var offset = positionCol + nbRow + ((nbRow-1) - positionCol - 1);
         var positionDiago1 = i - offset;
 
-        if ((positionCol +2  <= nbRow) && angular.isDefined(scope.selectable[positionDiago1])) {
+        if (!scope.selected[positionDiago1] && (positionCol +2  <= nbRow) && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
         }
       };
@@ -56,7 +56,7 @@ angular.module( 'magicsquare')
         var offset = positionCol + nbRow + ((nbRow-1) - positionCol - 1);
         var positionDiago1 = i + offset;
 
-        if ((positionCol - 2  > 0) && angular.isDefined(scope.selectable[positionDiago1])) {
+        if (!scope.selected[positionDiago1] && (positionCol - 2  > 0) && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
         }
       };
@@ -66,39 +66,11 @@ angular.module( 'magicsquare')
 
         var positionDiago1 = i + offset;
 
-        if ((positionCol + 2  <= nbRow) && angular.isDefined(scope.selectable[positionDiago1])) {
+        if (!scope.selected[positionDiago1] && (positionCol + 2  <= nbRow) && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
         }
       };
 
-
-      var _setSelectable = function(i) {
-        // 2 case to the right :
-        scope.selectable = [];
-
-        if((i +1 +2) < total) {
-          scope.selectable[i+1+2] = true;
-        }
-
-        if (((i+1) - 2) < total && ((i+1)-2) >= 0) {
-          scope.selectable[(i+1)-2] = true;
-        }
-
-      };
-
-      var _hasCaseToTheLeftLine = function(i) {
-
-      };
-
-
-
-      var _checkIfSelectable = function(i) {
-
-      };
-
-      var _getSelectable = function(i) {
-
-      };
       var hasStart = false;
       var _init = function() {
         _.each(scope.rangeRow, function(i) {
@@ -118,11 +90,16 @@ angular.module( 'magicsquare')
           if (!hasStart) {
             hasStart = true;
           }
+          var k = 0;
+          for(k; k < scope.selectable.length; k++) {
+            scope.selectable[k] = false;
+          }
 
           var numeroLine = parseInt(i/nbRow, 10);
           var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) ) +1 ;
 
           scope.selected[i] = true;
+          scope.selectable[i] = false;
           _checkIfLeft(i);
           _checkIfRight(i);
           _checkDiagoTopLeft(i, positionCol);
