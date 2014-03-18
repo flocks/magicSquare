@@ -15,18 +15,21 @@ angular.module( 'magicsquare')
       var _checkIfRight = function(i) {
         var numeroLine = parseInt(i/nbRow, 10);
         var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) )+ 1;
-
-        console.log("right = "+ (positionCol +2 < nbRow)  );
-        return (positionCol +2 < nbRow);
+        //return (positionCol +2 < nbRow);
+        if (positionCol + 2 < nbRow) {
+          scope.selectable[i+2] = true;
+        }
       
       };
 
       var _checkIfLeft = function(i) {
         var numeroLine = parseInt(i/nbRow, 10);
         var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) )+ 1;
+        //return (positionCol - 2 > 1);
 
-        console.log("left = " +  (positionCol - 2 > 1));
-        return (positionCol - 2 > 1);
+        if (positionCol - 2 > 1) {
+          scope.selectable[i-2] = true;
+        }
       };
 
       var _checkDiagoTopLeft = function(i,positionCol) {
