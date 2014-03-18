@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="magicsquare" ng-controller="AppCtrl">
+  <head>
+    <title ng-bind="pageTitle"></title>
+
+    <!-- font awesome from BootstrapCDN -->
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+    <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+
+    <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+
+  </head>
+  <body>
+
+    <div id="info">
+      <h3>Magic Square</h3>
+      <p> Just fill the square </p>
+    </div>
+    <board cols="5"></board>
+
+    <!--
+    <div id="board">
+      <div class="case selected"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case choice"></div>
+      <div class="case"></div>
+
+
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+
+      
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case choice"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+
+
+      <div class="case choice"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+
+
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+      <div class="case"></div>
+
+
+      
+    </div>
+
+      !-->
+
+  </body>
+</html>
