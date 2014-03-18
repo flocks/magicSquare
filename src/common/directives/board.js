@@ -6,7 +6,7 @@ angular.module( 'magicsquare')
     templateUrl: 'directives/board.tpl.html',
     replace:true,
     link: function( scope, element, attrs ) {
-      var lastSelected;
+      var nbSelected = 0;
       scope.selected = [];
       scope.selectable = [];
       var nbRow = parseInt(attrs.cols,10);
@@ -116,8 +116,10 @@ angular.module( 'magicsquare')
         _.each(scope.rangeRow, function(i) {
           scope.selectable[i] = false;
           scope.selected[i] = false;
-          hasStart = false;
         });
+
+        hasStart = false;
+        nbSelected = 0;
 
 
       };
@@ -129,6 +131,13 @@ angular.module( 'magicsquare')
         _init();
       });
 
+      var _openPopup = function(template) {
+        ngDialog.open({
+          template: template,
+          plain: true,
+          className: 'ngdialog-theme-plain'
+        });
+      };
 
       scope.handleClick = function(i) {
         
@@ -145,21 +154,21 @@ angular.module( 'magicsquare')
           var positionCol = (nbRow - (((numeroLine+1) * nbRow) - i) ) +1 ;
 
           scope.selected[i] = true;
-          scope.selectable[i] = false;
-          var count = 0;
-          count = _checkIfLeft(i) + _checkUp(i, positionCol) + _checkDown(i, positionCol) + _checkIfRight(i) + _checkDiagoTopLeft(i, positionCol) + _checkDiagoTopRight(i,positionCol) +  _checkDiagoBottomLeft(i,positionCol) + _checkDiagoBottomRight(i,positionCol);
+          // we use a counter to avoid a loop in the array to check if the game is solved or not
+          nbSelected++;
 
-          if(count === 0) {
-            ngDialog.open({
-              template: "<div id='popup'><p>Game Over ! </p><input type='button' ng-click='closeThisDialog()' value='Retry ?'></div>",
-              plain: true,
-              className: 'ngdialog-theme-plain'
-            });
+          if (nbSelected < total) {
+            var countChoice = 0;
+            scope.selectable[i] = false;
+            countChoice = _checkIfLeft(i) + _checkUp(i, positionCol) + _checkDown(i, positionCol) + _checkIfRight(i) + _checkDiagoTopLeft(i, positionCol) + _checkDiagoTopRight(i,positionCol) +  _checkDiagoBottomLeft(i,positionCol) + _checkDiagoBottomRight(i,positionCol);
 
+            if(countChoice === 0) {
+              _openPopup("<div id='popup'><p>Game Over ! </p><input class='button' type='button' ng-click='closeThisDialog()' value='Retry ?' /></div>");
+            }
           }
           else {
             
-
+            _openPopup("<div id='popup'><p>Yeah</p><input class='button' type='button' ng-click='closeThisDialog()' value='Do it again ?' /></div>");
           }
         
         }
