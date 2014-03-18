@@ -18,7 +18,10 @@ angular.module( 'magicsquare')
         //return (positionCol +2 < nbRow);
         if (!scope.selected[i+3] && positionCol + 2 < nbRow) {
           scope.selectable[i+3] = true;
+          return 1;
         }
+
+        return 0;
       
       };
 
@@ -29,23 +32,32 @@ angular.module( 'magicsquare')
 
         if (!scope.selected[i-3] && positionCol - 2 > 1) {
           scope.selectable[i-3] = true;
+          return 1;
         }
+
+        return 0;
       };
 
       var _checkUp = function(i, positionCol) {
         var offset = (2 * nbRow + positionCol) + (nbRow - positionCol);
         var position = i - offset;
-        if (!scope.selected[position]) {
+        if (!scope.selected[position] && position >= 0) {
           scope.selectable[position] = true;
+          return 1;
         }
+
+        return 0;
       };
 
       var _checkDown = function(i, positionCol) {
         var offset = (2 * nbRow + positionCol) + (nbRow - positionCol);
         var position = i + offset;
-        if (!scope.selected[position]) {
+        if (!scope.selected[position] && position < total) {
           scope.selectable[position] = true;
+          return 1;
         }
+
+        return 0;
       };
 
       var _checkDiagoTopLeft = function(i,positionCol) {
@@ -55,7 +67,10 @@ angular.module( 'magicsquare')
 
         if (!scope.selected[positionDiago1] &&  (positionCol -2) > 0 && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
+          return 1;
         }
+
+        return 0;
       };
 
       var _checkDiagoTopRight = function(i, positionCol) {
@@ -64,7 +79,10 @@ angular.module( 'magicsquare')
 
         if (!scope.selected[positionDiago1] && (positionCol +2  <= nbRow) && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
+          return 1;
         }
+
+        return 0;
       };
 
 
@@ -74,7 +92,10 @@ angular.module( 'magicsquare')
 
         if (!scope.selected[positionDiago1] && (positionCol - 2  > 0) && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
+          return 1;
         }
+
+        return 0;
       };
 
       var _checkDiagoBottomRight = function(i,positionCol) {
@@ -84,7 +105,10 @@ angular.module( 'magicsquare')
 
         if (!scope.selected[positionDiago1] && (positionCol + 2  <= nbRow) && angular.isDefined(scope.selectable[positionDiago1])) {
           scope.selectable[positionDiago1] =  true;
+          return 1;
         }
+
+        return 0;
       };
 
       var hasStart = false;
@@ -116,14 +140,15 @@ angular.module( 'magicsquare')
 
           scope.selected[i] = true;
           scope.selectable[i] = false;
-          _checkIfLeft(i);
-          _checkUp(i, positionCol);
-          _checkDown(i, positionCol);
-          _checkIfRight(i);
-          _checkDiagoTopLeft(i, positionCol);
-          _checkDiagoTopRight(i,positionCol);
-          _checkDiagoBottomLeft(i,positionCol);
-          _checkDiagoBottomRight(i,positionCol);
+          var count = 0;
+          count = _checkIfLeft(i) + _checkUp(i, positionCol) + _checkDown(i, positionCol) + _checkIfRight(i) + _checkDiagoTopLeft(i, positionCol) + _checkDiagoTopRight(i,positionCol) +  _checkDiagoBottomLeft(i,positionCol) + _checkDiagoBottomRight(i,positionCol);
+
+          if(count === 0) {
+            console.log("perdu");
+          }
+          else {
+            console.log("keep trying");
+          }
         
         }
 
